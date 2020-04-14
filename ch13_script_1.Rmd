@@ -37,6 +37,19 @@ The data has been taken from the National Election Survey. Note that both ideolo
 
 Explore the data and see the variables for yourself. See if anything looks strange in the summary.
 
+```{r}
+nes
+
+glimpse(nes)
+
+nes %>% 
+  sample_n(10)
+
+summary(nes)
+
+skim(nes)
+```
+
 Create a scatterplot of our outcome variable `dvote` and a continuous predictor `income`. 
 
 You might notice `geom_point()` doesn't give an intuitive graph since the points are so distinct. Try `geom_jitter()` instead. Use the arguments `alpha` and `height` to improve your plot.
@@ -44,6 +57,14 @@ You might notice `geom_point()` doesn't give an intuitive graph since the points
 Draw a regression line through this jittered data using `geom_smooth()`.
 
 Discuss whether a linear regression is appropriate for this. Is there a possibility of model predicting greater than 1 or less than 0 probability for `dvote`?
+
+```{r}
+nes %>%
+  ggplot(aes(x = income, y = dvote)) +
+    geom_jitter(height = 0.1, alpha = 0.2) +
+    geom_smooth(method = 'lm', se = FALSE) +
+    labs(x = "Ideology", y = "Preference for Democratic Candidate") 
+```
 
 
 # Scene 2
