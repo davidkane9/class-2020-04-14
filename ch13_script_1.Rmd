@@ -16,8 +16,8 @@ library(broom)
 library(infer)
 library(skimr)
 library(gganimate)
-library(rpart.plot)
-library(tidymodels)
+#library(rpart.plot)
+#library(tidymodels)
 library(tidyverse)
 
 nes <- read_rds("ch13_nes.rds")
@@ -63,7 +63,7 @@ nes %>%
   ggplot(aes(x = income, y = dvote)) +
     geom_jitter(height = 0.1, alpha = 0.2) +
     geom_smooth(method = 'lm', se = FALSE) +
-    labs(x = "Ideology", y = "Preference for Democratic Candidate") 
+    labs(x = "Income", y = "Preference for Democratic Candidate") 
 ```
 
 
@@ -83,7 +83,13 @@ Explain to your non-mathematical boss the relationship between income and prefer
 
 Optional (very hard!): Interpret the `estimate` for (Intercept). What does it mean? Think back to how we interpreted regression intercepts in the last two weeks. You *might* need to use the `qlogis()` function.
 
+```{r}
+model_1 <- glm(dvote ~ gender + income, family = 'binomial', data = nes)
 
+model_1 %>%
+  tidy(conf.int = TRUE) %>%
+  select(term, estimate, conf.low, conf.high)
+```
 
 
 # Scene 3
@@ -96,6 +102,12 @@ What does the `.fitted` column means?
 
 Why does `.fitted` have the same value for every male with income = 3? (First, show that this is in fact true. Then explain why?)
 
+```{r}
+model_1 %>%
+  augment(type.predict = "response", data = nes) %>%
+  select(dvote, income, gender, .fitted)
+
+```
 
 
 # Scene 4
