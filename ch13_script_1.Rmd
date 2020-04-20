@@ -22,7 +22,7 @@ library(tidyverse)
 
 nes <- read_rds("ch13_nes.rds")
 ```
-
+# Please Work
 # Before we start
 
 Here is the [chapter titled "Classification"](https://davidkane9.github.io/PPBDS/13-classification.html) that this class is based on. Over the previous two weeks, we have worked with dependent variables which are continuous. This week, we work with models for the case when the dependent variable is binary: success/yes (Y=1) or failure/no (Y=0). 
